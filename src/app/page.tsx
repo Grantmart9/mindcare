@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 import { ProgressDashboard } from "@/components/common/ProgressDashboard";
 import { MoodTracker } from "@/components/mood/MoodTracker";
 import { MoodChart } from "@/components/mood/MoodChart";
@@ -61,6 +62,7 @@ export default function Home() {
   const [moodEntries, setMoodEntries] = useState<MoodEntry[]>([
     sampleMoodEntry,
   ]);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   const handleNavigateToMood = () => setCurrentView("mood");
   const handleNavigateToCBT = () => setCurrentView("cbt");
@@ -81,87 +83,140 @@ export default function Home() {
 
   return (
     <div className="min-h-screen bg-background">
-      {/* Header */}
-      <header className="border-b bg-card">
-        <div className="container mx-auto px-4 py-4">
+      {/* Enhanced Header */}
+      <motion.header
+        initial={{ y: -20, opacity: 0 }}
+        animate={{ y: 0, opacity: 1 }}
+        transition={{ duration: 0.3 }}
+        className="border-b gradient-bg-primary shadow-lg"
+      >
+        <div className="container mx-auto px-4 py-3">
           <div className="flex items-center justify-between">
-            <div className="flex items-center space-x-2">
-              <div className="w-8 h-8 bg-primary rounded-lg flex items-center justify-center">
-                <span className="text-primary-foreground font-bold text-sm">
+            <motion.div
+              whileHover={{ scale: 1.05 }}
+              className="flex items-center space-x-3"
+            >
+              <div className="w-10 h-10 gradient-bg-primary rounded-xl flex items-center justify-center shadow-lg hover:shadow-xl transition-shadow duration-300">
+                <span className="text-primary-foreground font-bold text-lg">
                   MC
                 </span>
               </div>
-              <h1 className="text-xl font-semibold">MindCare</h1>
-            </div>
+              <h1 className="text-3xl font-bold bg-gradient-to-r from-primary via-accent to-secondary bg-clip-text text-transparent">
+                MindCare
+              </h1>
+            </motion.div>
 
-            <nav className="hidden md:flex items-center space-x-6">
-              <button
-                onClick={() => setCurrentView("dashboard")}
-                className={`text-sm font-medium transition-colors ${
-                  currentView === "dashboard"
-                    ? "text-primary"
-                    : "text-muted-foreground hover:text-foreground"
-                }`}
-              >
-                Dashboard
-              </button>
-              <button
-                onClick={handleNavigateToMood}
-                className={`text-sm font-medium transition-colors ${
-                  currentView === "mood"
-                    ? "text-primary"
-                    : "text-muted-foreground hover:text-foreground"
-                }`}
-              >
-                Track Mood
-              </button>
-              <button
-                onClick={() => setCurrentView("charts")}
-                className={`text-sm font-medium transition-colors ${
-                  currentView === "charts"
-                    ? "text-primary"
-                    : "text-muted-foreground hover:text-foreground"
-                }`}
-              >
-                Insights
-              </button>
-              <button
-                onClick={handleNavigateToCBT}
-                className={`text-sm font-medium transition-colors ${
-                  currentView === "cbt"
-                    ? "text-primary"
-                    : "text-muted-foreground hover:text-foreground"
-                }`}
-              >
-                CBT Tools
-              </button>
-              <button
-                onClick={handleNavigateToSafety}
-                className={`text-sm font-medium transition-colors ${
-                  currentView === "safety"
-                    ? "text-primary"
-                    : "text-muted-foreground hover:text-foreground"
-                }`}
-              >
-                Safety
-              </button>
-              <button
-                onClick={handleNavigateToResources}
-                className={`text-sm font-medium transition-colors ${
-                  currentView === "resources"
-                    ? "text-primary"
-                    : "text-muted-foreground hover:text-foreground"
-                }`}
-              >
-                Resources
-              </button>
+            <nav className="hidden md:flex items-center space-x-2">
+              {[
+                { label: "Dashboard", view: "dashboard" },
+                { label: "Track Mood", view: "mood" },
+                { label: "Insights", view: "charts" },
+                { label: "CBT Tools", view: "cbt" },
+                { label: "Safety", view: "safety" },
+                { label: "Resources", view: "resources" },
+              ].map((item) => (
+                <motion.div
+                  key={item.view}
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                >
+                  <Button
+                    variant={currentView === item.view ? "secondary" : "ghost"}
+                    onClick={() =>
+                      setCurrentView(item.view as typeof currentView)
+                    }
+                    className="rounded-full px-5 py-2 font-medium transition-all hover:scale-105 hover:shadow-md"
+                  >
+                    {item.label}
+                  </Button>
+                </motion.div>
+              ))}
             </nav>
+
+            {/* Mobile Menu Button */}
+            <motion.button
+              whileTap={{ scale: 0.95 }}
+              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+              className="md:hidden p-2 rounded-lg hover:bg-accent/20 transition-colors"
+              aria-label="Toggle mobile menu"
+            >
+              <motion.div className="w-6 h-6 flex flex-col justify-center items-center">
+                <motion.span
+                  animate={
+                    isMobileMenuOpen
+                      ? { rotate: 45, y: 8 }
+                      : { rotate: 0, y: 0 }
+                  }
+                  className="w-5 h-0.5 bg-foreground block mb-1 transition-colors"
+                />
+                <motion.span
+                  animate={isMobileMenuOpen ? { opacity: 0 } : { opacity: 1 }}
+                  className="w-5 h-0.5 bg-foreground block mb-1"
+                />
+                <motion.span
+                  animate={
+                    isMobileMenuOpen
+                      ? { rotate: -45, y: -8 }
+                      : { rotate: 0, y: 0 }
+                  }
+                  className="w-5 h-0.5 bg-foreground block"
+                />
+              </motion.div>
+            </motion.button>
           </div>
         </div>
-      </header>
+      </motion.header>
+
+      {/* Mobile Menu Dropdown */}
+      <AnimatePresence>
+        {isMobileMenuOpen && (
+          <motion.div
+            initial={{ opacity: 0, height: 0 }}
+            animate={{ opacity: 1, height: "auto" }}
+            exit={{ opacity: 0, height: 0 }}
+            transition={{ duration: 0.3, ease: "easeInOut" }}
+            className="md:hidden gradient-bg-primary border-b shadow-lg overflow-hidden"
+          >
+            <div className="container mx-auto px-4 py-4">
+              <nav className="flex flex-col space-y-2">
+                {[
+                  { label: "Dashboard", view: "dashboard" },
+                  { label: "Track Mood", view: "mood" },
+                  { label: "Insights", view: "charts" },
+                  { label: "CBT Tools", view: "cbt" },
+                  { label: "Safety", view: "safety" },
+                  { label: "Resources", view: "resources" },
+                ].map((item, index) => (
+                  <motion.div
+                    key={item.view}
+                    initial={{ opacity: 0, x: -20 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ delay: index * 0.1, duration: 0.2 }}
+                    whileHover={{ scale: 1.02 }}
+                    whileTap={{ scale: 0.98 }}
+                  >
+                    <Button
+                      variant={
+                        currentView === item.view ? "secondary" : "ghost"
+                      }
+                      onClick={() => {
+                        setCurrentView(item.view as typeof currentView);
+                        setIsMobileMenuOpen(false);
+                      }}
+                      className="w-full justify-start rounded-lg px-4 py-3 font-medium transition-all hover:shadow-md"
+                    >
+                      {item.label}
+                    </Button>
+                  </motion.div>
+                ))}
+              </nav>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
 
       {/* Main Content */}
-      <main className="container mx-auto px-4 py-8">
+      <main className="container mx-auto px-4 py-8 gradient-bg-secondary min-h-screen">
         {currentView === "dashboard" && (
           <ProgressDashboard
             stats={sampleStats}
@@ -210,53 +265,59 @@ export default function Home() {
         )}
 
         {currentView === "cbt" && (
-          <div className="text-center space-y-4">
-            <h2 className="text-2xl font-bold">CBT Tools</h2>
-            <p className="text-muted-foreground">
+          <div className="text-center space-y-6 glass-effect rounded-2xl p-8 shadow-xl">
+            <h2 className="text-3xl font-bold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
+              CBT Tools
+            </h2>
+            <p className="text-muted-foreground text-lg">
               CBT tools and exercises coming soon...
             </p>
-            <button
+            <Button
               onClick={() => setCurrentView("dashboard")}
-              className="text-primary hover:underline"
+              className="gradient-bg-primary hover:scale-105 transition-transform"
             >
               ← Back to Dashboard
-            </button>
+            </Button>
           </div>
         )}
 
         {currentView === "safety" && (
-          <div className="text-center space-y-4">
-            <h2 className="text-2xl font-bold">Safety & Crisis Resources</h2>
-            <p className="text-muted-foreground">
+          <div className="text-center space-y-6 glass-effect rounded-2xl p-8 shadow-xl">
+            <h2 className="text-3xl font-bold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
+              Safety & Crisis Resources
+            </h2>
+            <p className="text-muted-foreground text-lg">
               Safety planning and crisis resources coming soon...
             </p>
-            <button
+            <Button
               onClick={() => setCurrentView("dashboard")}
-              className="text-primary hover:underline"
+              className="gradient-bg-primary hover:scale-105 transition-transform"
             >
               ← Back to Dashboard
-            </button>
+            </Button>
           </div>
         )}
 
         {currentView === "resources" && (
-          <div className="text-center space-y-4">
-            <h2 className="text-2xl font-bold">Educational Resources</h2>
-            <p className="text-muted-foreground">
+          <div className="text-center space-y-6 glass-effect rounded-2xl p-8 shadow-xl">
+            <h2 className="text-3xl font-bold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
+              Educational Resources
+            </h2>
+            <p className="text-muted-foreground text-lg">
               Educational content and resources coming soon...
             </p>
-            <button
+            <Button
               onClick={() => setCurrentView("dashboard")}
-              className="text-primary hover:underline"
+              className="gradient-bg-primary hover:scale-105 transition-transform"
             >
               ← Back to Dashboard
-            </button>
+            </Button>
           </div>
         )}
       </main>
 
       {/* Footer */}
-      <footer className="border-t bg-muted/50 mt-16">
+      <footer className="border-t gradient-bg-accent mt-16">
         <div className="container mx-auto px-4 py-8">
           <div className="text-center space-y-4">
             <div className="flex items-center justify-center space-x-4 text-sm text-muted-foreground">

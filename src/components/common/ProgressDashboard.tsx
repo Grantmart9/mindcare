@@ -1,5 +1,6 @@
 "use client";
 
+import { motion } from "framer-motion";
 import {
   Card,
   CardContent,
@@ -20,6 +21,15 @@ import {
   Phone,
 } from "lucide-react";
 import { format, isToday, parseISO } from "date-fns";
+
+const fadeIn = {
+  hidden: { opacity: 0, y: 20 },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.4 } },
+};
+
+const stagger = {
+  visible: { transition: { staggerChildren: 0.1 } },
+};
 
 interface ProgressDashboardProps {
   stats: DashboardStats;
@@ -57,15 +67,20 @@ export function ProgressDashboard({
 
   return (
     <div className="space-y-6">
-      {/* Welcome Section */}
-      <div className="text-center space-y-2">
-        <h1 className="text-3xl font-bold text-foreground">
+      {/* Enhanced Welcome Section */}
+      <motion.div
+        initial={{ opacity: 0, y: -20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5 }}
+        className="text-center space-y-3"
+      >
+        <h1 className="text-4xl font-bold bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent">
           Welcome to MindCare
         </h1>
-        <p className="text-muted-foreground">
+        <p className="text-lg text-gray-600">
           Your evidence-based companion for mental health and wellness
         </p>
-      </div>
+      </motion.div>
 
       {/* Quick Stats */}
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4">

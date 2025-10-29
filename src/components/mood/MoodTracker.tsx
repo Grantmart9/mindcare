@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { motion } from "framer-motion";
 import {
   Card,
   CardContent,
@@ -28,10 +29,10 @@ import {
 import { format } from "date-fns";
 
 interface MoodTrackerProps {
-  onMoodSubmit: (
+  latestEntry?: MoodEntry;
+  onMoodSubmit?: (
     entry: Omit<MoodEntry, "id" | "createdAt" | "updatedAt">
   ) => void;
-  latestEntry?: MoodEntry;
   className?: string;
 }
 
@@ -94,7 +95,7 @@ export function MoodTracker({
     setIsSubmitting(true);
 
     try {
-      const entry: Omit<MoodEntry, "id" | "createdAt" | "updatedAt"> = {
+      const entry = {
         date: new Date().toISOString(),
         mood,
         energy,
@@ -105,7 +106,10 @@ export function MoodTracker({
         triggers: triggers.length > 0 ? triggers : undefined,
       };
 
-      onMoodSubmit(entry);
+      // Call the onMoodSubmit prop instead of apiService
+      if (onMoodSubmit) {
+        onMoodSubmit(entry);
+      }
 
       toast.success("Mood entry saved successfully!");
 
@@ -147,53 +151,68 @@ export function MoodTracker({
         </p>
       </div>
 
-      {/* Current Mood Display */}
-      <Card>
-        <CardHeader>
-          <CardTitle className="flex items-center space-x-2">
-            <Heart className="h-5 w-5" />
-            <span>Current Mood</span>
-          </CardTitle>
-          <CardDescription>
-            How are you feeling today? (1 = Very Low, 10 = Great)
-          </CardDescription>
-        </CardHeader>
-        <CardContent>
-          <div className="space-y-4">
-            <div className="flex items-center justify-center space-x-4">
-              <div
-                className={`w-16 h-16 rounded-full ${getMoodColor(
-                  mood
-                )} flex items-center justify-center`}
+      {/* Enhanced Current Mood Display */}
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.4 }}
+      >
+        <Card className="border-0 bg-gradient-to-br from-blue-50 to-purple-50 shadow-lg">
+          <CardHeader>
+            <CardTitle className="flex items-center space-x-3">
+              <motion.div
+                animate={{ scale: [1, 1.1, 1] }}
+                transition={{ duration: 2, repeat: Infinity }}
               >
-                <span className="text-2xl font-bold text-white">{mood}</span>
-              </div>
-              <div>
-                <Badge variant="outline" className="text-lg px-3 py-1">
+                <Heart className="h-6 w-6 text-pink-500 fill-pink-500" />
+              </motion.div>
+              <span className="text-2xl font-bold bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent">
+                Current Mood
+              </span>
+            </CardTitle>
+            <CardDescription className="text-gray-600">
+              How are you feeling today? (1 = Very Low, 10 = Great)
+            </CardDescription>
+          </CardHeader>
+          <CardContent>
+            <div className="space-y-6">
+              <div className="flex flex-col items-center space-y-4">
+                <motion.div
+                  className={`w-24 h-24 rounded-full ${getMoodColor(
+                    mood
+                  )} flex items-center justify-center shadow-lg`}
+                  animate={{ scale: [1, 1.05, 1] }}
+                  transition={{ duration: 1.5, repeat: Infinity }}
+                >
+                  <span className="text-3xl font-bold text-white">{mood}</span>
+                </motion.div>
+                <Badge className="text-lg px-4 py-1.5 bg-white border border-purple-200 text-purple-600 shadow-sm">
                   {getMoodLabel(mood)}
                 </Badge>
               </div>
-            </div>
-            <div className="px-4">
-              <Slider
-                value={[mood]}
-                onValueChange={(value) => setMood(value[0])}
-                max={10}
-                min={1}
-                step={1}
-                className="w-full"
-              />
-              <div className="flex justify-between text-sm text-muted-foreground mt-2">
-                <span>Very Low</span>
-                <span className={`font-medium ${getSliderColor(mood)}`}>
-                  {mood}/10 - {getMoodLabel(mood)}
-                </span>
-                <span>Great</span>
+
+              <div className="space-y-4">
+                <div className="relative">
+                  <div className="absolute inset-0 bg-gradient-to-r from-red-400 via-yellow-400 to-green-400 rounded-full opacity-20 h-2 top-1/2 -translate-y-1/2" />
+                  <Slider
+                    value={[mood]}
+                    onValueChange={(value) => setMood(value[0])}
+                    max={10}
+                    min={1}
+                    step={1}
+                    className="w-full relative"
+                  />
+                </div>
+                <div className="flex justify-between text-sm font-medium text-gray-600">
+                  <span>😔 Very Low</span>
+                  <span className={`${getSliderColor(mood)}`}>{mood}/10</span>
+                  <span>😁 Great</span>
+                </div>
               </div>
             </div>
-          </div>
-        </CardContent>
-      </Card>
+          </CardContent>
+        </Card>
+      </motion.div>
 
       {/* Related Factors */}
       <Card>

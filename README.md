@@ -1,36 +1,112 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# MindCare: Frontend Mental Health Support App
 
-## Getting Started
+A React/Next.js frontend application for mental health support with mood tracking, journaling, and therapeutic features.
 
-First, run the development server:
+## 🚀 Features
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+- **Mood Tracking**: Daily mood check-ins with visual charts
+- **AI Journal**: AI-powered journaling with insights
+- **Therapeutic Chatbot**: Conversational AI for mental health support
+- **Habit Building**: Track and build healthy habits
+- **Peer Support**: Connect with others in peer support groups
+- **Personalized Recommendations**: Get tailored CBT exercises and resources
+- **Clinician Dashboard**: For healthcare providers to monitor patients
+
+## 📁 Project Structure
+
+```
+mindcare/
+│
+├── README.md               # This file
+├── package.json            # Node.js dependencies
+├── next.config.ts          # Next.js configuration
+├── tailwind.config.js      # Tailwind CSS configuration
+├── components.json         # shadcn/ui configuration
+├── eslint.config.mjs       # ESLint configuration
+├── postcss.config.mjs      # PostCSS configuration
+├── tsconfig.json           # TypeScript configuration
+│
+├── public/                 # Static assets
+│   ├── favicon.ico
+│   └── *.svg
+│
+├── src/
+│   ├── app/                # Next.js app directory
+│   │   ├── layout.tsx      # Root layout
+│   │   ├── page.tsx        # Home page
+│   │   └── globals.css     # Global styles
+│   │
+│   ├── components/         # React components
+│   │   ├── ui/             # Reusable UI components (shadcn/ui)
+│   │   ├── mood/           # Mood tracking components
+│   │   ├── journal/        # Journaling components
+│   │   ├── chat/           # Chatbot components
+│   │   ├── clinician/      # Clinician dashboard
+│   │   ├── analytics/      # Analytics and charts
+│   │   ├── gamification/   # Achievement system
+│   │   ├── habits/         # Habit tracking
+│   │   ├── peersupport/    # Peer support groups
+│   │   ├── recommendations/ # Personalized recommendations
+│   │   ├── screening/      # Mental health screenings
+│   │   └── common/         # Shared components
+│   │
+│   └── lib/                # Utilities and services
+│       ├── utils.ts        # Utility functions
+│       ├── types/          # TypeScript type definitions
+│       ├── services/       # API services (mocked for frontend-only)
+│       └── data/           # Static data and constants
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## 🚀 Quick Start
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### Prerequisites
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+- Node.js 18+
+- npm or yarn
 
-## Learn More
+### Installation
 
-To learn more about Next.js, take a look at the following resources:
+```bash
+# Install dependencies
+npm install
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+# Start development server
+npm run dev
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+### Access the Application
 
-## Deploy on Vercel
+- **Frontend**: http://localhost:3000
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## 🔧 Development
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+### Available Scripts
+
+```bash
+# Development
+npm run dev          # Start development server
+npm run build        # Build for production
+npm run start        # Start production server
+npm run lint         # Run ESLint
+npm run type-check   # Run TypeScript type checking
+```
+
+### Tech Stack
+
+- **Framework**: Next.js 14 with App Router
+- **Language**: TypeScript
+- **Styling**: Tailwind CSS
+- **UI Components**: shadcn/ui
+- **State Management**: React hooks (useState, useContext)
+- **Charts**: Recharts
+- **Icons**: Lucide React
+
+## 🆘 Crisis Resources
+
+- **988 Suicide & Crisis Lifeline**: Call or text 988
+- **Crisis Text Line**: Text HOME to 741741
+- **National Suicide Prevention Lifeline**: 1-800-273-TALK (8255)
+
+---
+
+**⚠️ Important Disclaimer**: This software is not a substitute for professional medical care. Always consult with qualified healthcare providers for mental health concerns. In case of emergency, call 988 or go to your nearest emergency room.

@@ -152,3 +152,24 @@ export interface MindfulnessExerciseProps {
   exercise?: MindfulnessExercise;
   onComplete: (exercise: Omit<MindfulnessExercise, "id">) => void;
 }
+
+export interface JournalEntry {
+  id: string;
+  date: string;
+  content: string;
+  sentiment?: {
+    sentiment: "positive" | "neutral" | "negative";
+    confidence: number;
+    emotions: string[];
+    intensity: number;
+  };
+  moodScore?: number;
+  wordCount: number;
+  createdAt: string;
+  updatedAt: string;
+}
+
+export interface JournalProps {
+  onSave: (entry: Omit<JournalEntry, "id" | "createdAt" | "updatedAt">) => void;
+  entry?: JournalEntry;
+}
