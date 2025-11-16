@@ -14,8 +14,12 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "MindCare - Evidence-Based Depression Management",
-  description: "A comprehensive mental health app providing evidence-based tools for depression management, mood tracking, CBT exercises, and crisis support.",
+  title: "MindCare",
+  description:
+    "A comprehensive mental health app providing evidence-based tools for depression management, mood tracking, CBT exercises, and crisis support.",
+  icons: {
+    icon: "/favicon.svg",
+  },
 };
 
 export default function RootLayout({
