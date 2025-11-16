@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import { motion } from "framer-motion";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -30,6 +31,8 @@ import {
   Trash2,
   Award,
   Zap,
+  Activity,
+  Star,
 } from "lucide-react";
 import { isToday, startOfWeek, endOfWeek } from "date-fns";
 
@@ -311,69 +314,217 @@ export function HabitBuilder({
   const activeHabits = habits.filter(shouldShowHabitToday);
 
   return (
-    <div className={`space-y-6 ${className}`}>
-      {/* Header */}
-      <div className="text-center space-y-2">
-        <h2 className="text-2xl font-bold flex items-center justify-center space-x-2">
-          <Target className="h-6 w-6" />
-          <span>Habit Builder</span>
-        </h2>
-        <p className="text-muted-foreground">
-          Build positive habits with AI-powered nudges and progress tracking
+    <div className={`space-y-8 ${className}`}>
+      {/* Enhanced Header */}
+      <motion.div
+        initial={{ opacity: 0, y: -20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5 }}
+        className="text-center space-y-4 relative"
+      >
+        <div className="absolute inset-0 bg-gradient-to-r from-indigo-100/20 via-purple-100/20 to-pink-100/20 rounded-3xl blur-3xl"></div>
+        <motion.div
+          animate={{
+            scale: [1, 1.1, 1],
+            rotate: [0, 5, -5, 0],
+          }}
+          transition={{ duration: 3, repeat: Infinity }}
+          className="text-6xl mb-4 floating-animation relative z-10"
+        >
+          🎯
+        </motion.div>
+        <h1 className="text-5xl font-bold bg-gradient-to-r from-indigo-400 via-purple-500 to-pink-500 bg-clip-text text-transparent drop-shadow-sm relative z-10">
+          Habit Builder
+        </h1>
+        <p className="text-xl text-muted-foreground max-w-2xl mx-auto leading-relaxed relative z-10">
+          Build positive habits with AI-powered nudges and progress tracking 🌟
         </p>
-      </div>
+      </motion.div>
 
-      {/* Quick Stats */}
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-        <Card>
-          <CardContent className="p-4 text-center">
-            <Flame className="h-6 w-6 mx-auto mb-2 text-orange-500" />
-            <div className="text-2xl font-bold">
-              {activeHabits.reduce(
-                (sum, habit) => sum + getHabitStats(habit.id).currentStreak,
-                0
-              )}
-            </div>
-            <div className="text-sm text-muted-foreground">Current Streaks</div>
-          </CardContent>
-        </Card>
+      {/* Enhanced Quick Stats */}
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.1 }}
+          whileHover={{ scale: 1.02, y: -2 }}
+        >
+          <Card className="glass-effect border-0 shadow-xl overflow-hidden relative group">
+            <div className="absolute inset-0 bg-gradient-to-br from-orange-50/50 to-yellow-50/30 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
 
-        <Card>
-          <CardContent className="p-4 text-center">
-            <CheckCircle className="h-6 w-6 mx-auto mb-2 text-green-500" />
-            <div className="text-2xl font-bold">
-              {
-                entries.filter((e) => isToday(new Date(e.date)) && e.completed)
-                  .length
-              }
-            </div>
-            <div className="text-sm text-muted-foreground">Completed Today</div>
-          </CardContent>
-        </Card>
+            <CardContent className="p-6 relative z-10">
+              <motion.div
+                className="text-center space-y-3"
+                whileHover={{ scale: 1.02 }}
+              >
+                <motion.div
+                  animate={{
+                    scale: [1, 1.1, 1],
+                    rotate: [0, 5, -5, 0],
+                  }}
+                  transition={{ duration: 2, repeat: Infinity }}
+                  className="p-3 bg-gradient-to-br from-orange-400 to-yellow-400 rounded-xl mx-auto w-fit"
+                >
+                  <Flame className="h-6 w-6 text-white" />
+                </motion.div>
 
-        <Card>
-          <CardContent className="p-4 text-center">
-            <TrendingUp className="h-6 w-6 mx-auto mb-2 text-blue-500" />
-            <div className="text-2xl font-bold">{activeHabits.length}</div>
-            <div className="text-sm text-muted-foreground">Active Habits</div>
-          </CardContent>
-        </Card>
+                <div>
+                  <motion.p
+                    className="text-3xl font-bold bg-gradient-to-r from-orange-600 to-yellow-600 bg-clip-text text-transparent"
+                    whileHover={{ scale: 1.05 }}
+                    transition={{ type: "spring", stiffness: 300 }}
+                  >
+                    {activeHabits.reduce(
+                      (sum, habit) =>
+                        sum + getHabitStats(habit.id).currentStreak,
+                      0
+                    )}
+                  </motion.p>
+                  <p className="text-sm font-semibold text-muted-foreground mt-1">
+                    Current Streaks
+                  </p>
+                </div>
+              </motion.div>
+            </CardContent>
+          </Card>
+        </motion.div>
 
-        <Card>
-          <CardContent className="p-4 text-center">
-            <Award className="h-6 w-6 mx-auto mb-2 text-purple-500" />
-            <div className="text-2xl font-bold">
-              {Math.round(
-                activeHabits.reduce(
-                  (sum, habit) => sum + getHabitStats(habit.id).completionRate,
-                  0
-                ) / Math.max(activeHabits.length, 1)
-              )}
-              %
-            </div>
-            <div className="text-sm text-muted-foreground">Success Rate</div>
-          </CardContent>
-        </Card>
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.2 }}
+          whileHover={{ scale: 1.02, y: -2 }}
+        >
+          <Card className="glass-effect border-0 shadow-xl overflow-hidden relative group">
+            <div className="absolute inset-0 bg-gradient-to-br from-green-50/50 to-emerald-50/30 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+
+            <CardContent className="p-6 relative z-10">
+              <motion.div
+                className="text-center space-y-3"
+                whileHover={{ scale: 1.02 }}
+              >
+                <motion.div
+                  animate={{
+                    scale: [1, 1.1, 1],
+                    rotate: [0, -5, 5, 0],
+                  }}
+                  transition={{ duration: 2, repeat: Infinity }}
+                  className="p-3 bg-gradient-to-br from-green-400 to-emerald-400 rounded-xl mx-auto w-fit"
+                >
+                  <CheckCircle className="h-6 w-6 text-white" />
+                </motion.div>
+
+                <div>
+                  <motion.p
+                    className="text-3xl font-bold bg-gradient-to-r from-green-600 to-emerald-600 bg-clip-text text-transparent"
+                    whileHover={{ scale: 1.05 }}
+                    transition={{ type: "spring", stiffness: 300 }}
+                  >
+                    {
+                      entries.filter(
+                        (e) => isToday(new Date(e.date)) && e.completed
+                      ).length
+                    }
+                  </motion.p>
+                  <p className="text-sm font-semibold text-muted-foreground mt-1">
+                    Completed Today
+                  </p>
+                </div>
+              </motion.div>
+            </CardContent>
+          </Card>
+        </motion.div>
+
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.3 }}
+          whileHover={{ scale: 1.02, y: -2 }}
+        >
+          <Card className="glass-effect border-0 shadow-xl overflow-hidden relative group">
+            <div className="absolute inset-0 bg-gradient-to-br from-blue-50/50 to-cyan-50/30 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+
+            <CardContent className="p-6 relative z-10">
+              <motion.div
+                className="text-center space-y-3"
+                whileHover={{ scale: 1.02 }}
+              >
+                <motion.div
+                  animate={{
+                    scale: [1, 1.1, 1],
+                    rotate: [0, 10, -10, 0],
+                  }}
+                  transition={{ duration: 3, repeat: Infinity }}
+                  className="p-3 bg-gradient-to-br from-blue-400 to-cyan-400 rounded-xl mx-auto w-fit"
+                >
+                  <Activity className="h-6 w-6 text-white" />
+                </motion.div>
+
+                <div>
+                  <motion.p
+                    className="text-3xl font-bold bg-gradient-to-r from-blue-600 to-cyan-600 bg-clip-text text-transparent"
+                    whileHover={{ scale: 1.05 }}
+                    transition={{ type: "spring", stiffness: 300 }}
+                  >
+                    {activeHabits.length}
+                  </motion.p>
+                  <p className="text-sm font-semibold text-muted-foreground mt-1">
+                    Active Habits
+                  </p>
+                </div>
+              </motion.div>
+            </CardContent>
+          </Card>
+        </motion.div>
+
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.4 }}
+          whileHover={{ scale: 1.02, y: -2 }}
+        >
+          <Card className="glass-effect border-0 shadow-xl overflow-hidden relative group">
+            <div className="absolute inset-0 bg-gradient-to-br from-purple-50/50 to-pink-50/30 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+
+            <CardContent className="p-6 relative z-10">
+              <motion.div
+                className="text-center space-y-3"
+                whileHover={{ scale: 1.02 }}
+              >
+                <motion.div
+                  animate={{
+                    scale: [1, 1.1, 1],
+                    rotate: [0, 5, -5, 0],
+                  }}
+                  transition={{ duration: 3, repeat: Infinity }}
+                  className="p-3 bg-gradient-to-br from-purple-400 to-pink-400 rounded-xl mx-auto w-fit"
+                >
+                  <Award className="h-6 w-6 text-white" />
+                </motion.div>
+
+                <div>
+                  <motion.p
+                    className="text-3xl font-bold bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent"
+                    whileHover={{ scale: 1.05 }}
+                    transition={{ type: "spring", stiffness: 300 }}
+                  >
+                    {Math.round(
+                      activeHabits.reduce(
+                        (sum, habit) =>
+                          sum + getHabitStats(habit.id).completionRate,
+                        0
+                      ) / Math.max(activeHabits.length, 1)
+                    )}
+                    %
+                  </motion.p>
+                  <p className="text-sm font-semibold text-muted-foreground mt-1">
+                    Success Rate
+                  </p>
+                </div>
+              </motion.div>
+            </CardContent>
+          </Card>
+        </motion.div>
       </div>
 
       {/* Today&apos;s Habits */}
@@ -703,15 +854,62 @@ export function HabitBuilder({
         </Card>
       )}
 
-      {/* Tips */}
-      <Alert>
-        <Target className="h-4 w-4" />
-        <AlertDescription>
-          <strong>Habit Building Tips:</strong> Start small and be consistent.
-          Focus on building one or two habits at a time, and remember that
-          streaks are built one day at a time!
-        </AlertDescription>
-      </Alert>
+      {/* Enhanced Tips */}
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 0.8 }}
+      >
+        <Card className="glass-effect border-0 shadow-xl bg-gradient-to-r from-indigo-50/50 to-purple-50/50 relative overflow-hidden">
+          <div className="absolute inset-0 bg-gradient-to-r from-indigo-100/20 to-purple-100/20 rounded-lg"></div>
+          <CardContent className="p-6 relative z-10">
+            <div className="flex items-start space-x-4">
+              <motion.div
+                animate={{
+                  scale: [1, 1.1, 1],
+                  rotate: [0, 5, -5, 0],
+                }}
+                transition={{ duration: 3, repeat: Infinity }}
+                className="text-3xl"
+              >
+                💡
+              </motion.div>
+              <div>
+                <h4 className="font-bold text-lg mb-3 bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent">
+                  Habit Building Tips
+                </h4>
+                <ul className="text-sm text-muted-foreground space-y-2">
+                  <li className="flex items-center space-x-2">
+                    <span className="text-indigo-500">✨</span>
+                    <span>
+                      Start small and be consistent - tiny steps lead to big
+                      changes
+                    </span>
+                  </li>
+                  <li className="flex items-center space-x-2">
+                    <span className="text-purple-500">🎯</span>
+                    <span>
+                      Focus on building one or two habits at a time for success
+                    </span>
+                  </li>
+                  <li className="flex items-center space-x-2">
+                    <span className="text-pink-500">🔥</span>
+                    <span>
+                      Streaks are built one day at a time - consistency is key!
+                    </span>
+                  </li>
+                  <li className="flex items-center space-x-2">
+                    <span className="text-orange-500">🌟</span>
+                    <span>
+                      Celebrate small wins to maintain motivation and momentum
+                    </span>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+      </motion.div>
     </div>
   );
 }
