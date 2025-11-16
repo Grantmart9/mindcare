@@ -342,14 +342,14 @@ export function CBTTools() {
             rotate: [0, 3, -3, 0],
           }}
           transition={{ duration: 3.5, repeat: Infinity }}
-          className="text-6xl mb-4 floating-animation relative z-10"
+          className="text-4xl md:text-6xl mb-4 floating-animation relative z-10"
         >
           🧠
         </motion.div>
-        <h1 className="text-4xl font-bold bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 bg-clip-text text-transparent relative z-10">
+        <h1 className="text-2xl md:text-4xl font-bold bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 bg-clip-text text-transparent relative z-10">
           CBT Tools & Exercises
         </h1>
-        <p className="text-xl text-muted-foreground max-w-2xl mx-auto relative z-10">
+        <p className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto relative z-10">
           Evidence-based Cognitive Behavioral Therapy tools to help you identify
           and change negative thought patterns
         </p>

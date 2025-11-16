@@ -97,7 +97,7 @@ export default function Home() {
         transition={{ duration: 0.3 }}
         className="border-b gradient-bg-sunset shadow-xl mood-boost-shadow w-full"
       >
-        <div className="w-full px-6 py-4">
+        <div className="w-full px-4 md:px-6 py-3 md:py-4">
           <div className="flex items-center justify-between">
             <motion.div
               whileHover={{ scale: 1.05 }}
@@ -108,7 +108,7 @@ export default function Home() {
                   🌟
                 </span>
               </div>
-              <h1 className="text-4xl font-bold bg-gradient-to-r from-orange-400 via-pink-500 to-purple-500 bg-clip-text text-transparent drop-shadow-sm">
+              <h1 className="text-2xl md:text-4xl font-bold bg-gradient-to-r from-orange-400 via-pink-500 to-purple-500 bg-clip-text text-transparent drop-shadow-sm">
                 MindCare
               </h1>
             </motion.div>
@@ -135,7 +135,7 @@ export default function Home() {
                     onClick={() =>
                       setCurrentView(item.view as typeof currentView)
                     }
-                    className="rounded-full px-6 py-3 font-medium transition-all duration-300 hover:shadow-lg hover:shadow-orange-200/25 border-0 bg-white/10 backdrop-blur-sm text-foreground hover:bg-gradient-to-r hover:from-orange-100 hover:to-pink-100"
+                    className="rounded-full px-4 md:px-6 py-2 md:py-3 font-medium transition-all duration-300 hover:shadow-lg hover:shadow-orange-200/25 border-0 bg-white/10 backdrop-blur-sm text-foreground hover:bg-gradient-to-r hover:from-orange-100 hover:to-pink-100 text-sm md:text-base"
                   >
                     {item.label}
                   </Button>
@@ -147,7 +147,7 @@ export default function Home() {
             <motion.button
               whileTap={{ scale: 0.95 }}
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-              className="md:hidden p-2 rounded-lg hover:bg-accent/20 transition-colors"
+              className="md:hidden p-3 rounded-lg hover:bg-accent/20 transition-colors min-w-[44px] min-h-[44px] flex items-center justify-center"
               aria-label="Toggle mobile menu"
             >
               <motion.div className="w-6 h-6 flex flex-col justify-center items-center">
@@ -187,7 +187,7 @@ export default function Home() {
             transition={{ duration: 0.3, ease: "easeInOut" }}
             className="md:hidden gradient-bg-sunset border-b shadow-xl overflow-hidden mood-boost-shadow w-full"
           >
-            <div className="w-full px-6 py-4">
+            <div className="w-full px-4 md:px-6 py-3 md:py-4">
               <nav className="flex flex-col space-y-3">
                 {[
                   { label: "🏠 Dashboard", view: "dashboard" },
@@ -213,7 +213,7 @@ export default function Home() {
                         setCurrentView(item.view as typeof currentView);
                         setIsMobileMenuOpen(false);
                       }}
-                      className="w-full justify-start rounded-xl px-5 py-4 font-medium transition-all duration-300 hover:shadow-lg hover:bg-white/20 backdrop-blur-sm border-0"
+                      className="w-full justify-start rounded-xl px-5 py-4 font-medium transition-all duration-300 hover:shadow-lg hover:bg-white/20 backdrop-blur-sm border-0 min-h-[48px] text-left"
                     >
                       {item.label}
                     </Button>
@@ -233,7 +233,7 @@ export default function Home() {
           <div className="absolute top-40 right-20 w-40 h-40 bg-pink-300 rounded-full blur-3xl"></div>
           <div className="absolute bottom-20 left-1/3 w-36 h-36 bg-yellow-300 rounded-full blur-3xl"></div>
         </div>
-        <div className="w-full px-6">
+        <div className="w-full px-4 md:px-6">
           {currentView === "dashboard" && (
             <ProgressDashboard
               stats={sampleStats}
@@ -291,7 +291,7 @@ export default function Home() {
 
       {/* Footer */}
       <footer className="border-t gradient-bg-sunset mt-16 w-full">
-        <div className="w-full px-6 py-12">
+        <div className="w-full px-4 md:px-6 py-8 md:py-12">
           <div className="text-center space-y-4">
             <div className="flex items-center justify-center space-x-4 text-sm text-muted-foreground">
               <span>© 2024 MindCare</span>

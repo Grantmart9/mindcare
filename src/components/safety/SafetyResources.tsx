@@ -213,14 +213,14 @@ export function SafetyResources() {
             rotate: [0, -2, 2, 0],
           }}
           transition={{ duration: 4, repeat: Infinity }}
-          className="text-6xl mb-4 floating-animation relative z-10"
+          className="text-4xl md:text-6xl mb-4 floating-animation relative z-10"
         >
           🛡️
         </motion.div>
-        <h1 className="text-4xl font-bold bg-gradient-to-r from-green-500 via-blue-500 to-purple-500 bg-clip-text text-transparent relative z-10">
+        <h1 className="text-2xl md:text-4xl font-bold bg-gradient-to-r from-green-500 via-blue-500 to-purple-500 bg-clip-text text-transparent relative z-10">
           Safety & Crisis Support
         </h1>
-        <p className="text-xl text-muted-foreground max-w-2xl mx-auto relative z-10">
+        <p className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto relative z-10">
           Your safety matters. Access crisis resources, coping strategies, and
           emergency support when you need it most
         </p>

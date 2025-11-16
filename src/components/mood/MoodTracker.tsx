@@ -152,11 +152,13 @@ export function MoodTracker({
         className="text-center space-y-4 mb-8 relative"
       >
         <div className="absolute inset-0 bg-gradient-to-r from-blue-100/20 via-cyan-100/20 to-indigo-100/20 rounded-3xl blur-3xl"></div>
-        <motion.div className="text-6xl mb-4 relative z-10">😊</motion.div>
-        <h1 className="text-5xl font-bold bg-gradient-to-r from-blue-400 via-cyan-500 to-indigo-500 bg-clip-text text-transparent drop-shadow-sm relative z-10">
+        <motion.div className="text-4xl md:text-6xl mb-4 relative z-10">
+          😊
+        </motion.div>
+        <h1 className="text-3xl md:text-5xl font-bold bg-gradient-to-r from-blue-400 via-cyan-500 to-indigo-500 bg-clip-text text-transparent drop-shadow-sm relative z-10">
           Daily Mood Check-in
         </h1>
-        <p className="text-xl text-muted-foreground max-w-2xl mx-auto leading-relaxed relative z-10">
+        <p className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto leading-relaxed relative z-10">
           Track your mood and related factors to identify patterns and progress
         </p>
       </motion.div>
@@ -200,7 +202,7 @@ export function MoodTracker({
           <CardContent className="space-y-8 relative z-10">
             <div className="flex flex-col items-center space-y-6">
               <motion.div
-                className={`w-32 h-32 rounded-full bg-gradient-to-br ${getMoodColor(
+                className={`w-24 h-24 md:w-32 md:h-32 rounded-full bg-gradient-to-br ${getMoodColor(
                   mood
                 )} flex items-center justify-center shadow-2xl border-4 border-white/50 relative overflow-hidden`}
                 animate={{
@@ -217,7 +219,7 @@ export function MoodTracker({
               >
                 <div className="absolute inset-0 bg-gradient-to-r from-white/0 via-white/20 to-white/0 animate-pulse"></div>
                 <motion.span
-                  className="text-4xl font-bold text-white drop-shadow-lg relative z-10"
+                  className="text-3xl md:text-4xl font-bold text-white drop-shadow-lg relative z-10"
                   animate={{ scale: [1, 1.05, 1] }}
                   transition={{ duration: 1.5, repeat: Infinity }}
                 >
